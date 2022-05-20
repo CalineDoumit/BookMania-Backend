@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var passport = require('passport');
+const cors = require('../config/cors');
 
 var User=require('../models/users.models')
 
@@ -10,7 +11,9 @@ router.get('/', function(req, res, next) {
 });
 
 
-router.post('/signup', (req, res, next) => {
+router.route('/signup')
+    .options(cors.corsWithOptions, (req, res) => { res.sendStatus(200); })
+    .post((req, res, next) => {
     User.register(new User({username: req.body.username}),
         req.body.password, (err, user) => {
             if(err) {
