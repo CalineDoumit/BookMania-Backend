@@ -4,6 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const mongoose = require('mongoose');
+const cors=require('cors')
 
 var config=require('./config/config');
 
@@ -26,6 +27,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  next();
+});
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
@@ -36,6 +41,8 @@ app.use('/books', bookRouter);
 app.use(function(req, res, next) {
   next(createError(404));
 });
+
+app.use(cors());
 
 // error handler
 app.use(function(err, req, res, next) {
