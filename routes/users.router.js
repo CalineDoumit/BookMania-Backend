@@ -31,10 +31,12 @@ router.route('/signup')
         });
 });
 
-router.post('/login', passport.authenticate('local'), (req, res) => {
+router.route('/login')
+    .options(cors.corsWithOptions, (req, res) => { res.sendStatus(200); })
+    .post(passport.authenticate('local'), (req, res) => {
     res.statusCode = 200;
     res.setHeader('Content-Type', 'application/json');
-    res.json({success: true, status: 'You are successfully logged in!'});
+    res.json({success: true});
 });
 
 router.route('/allusers')
