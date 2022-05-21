@@ -10,7 +10,6 @@ const bookSchema = new Schema({
     },
     Genre: {
         type: String,
-        enum:['action','romance','mystery','educational']
     },
 });
 
